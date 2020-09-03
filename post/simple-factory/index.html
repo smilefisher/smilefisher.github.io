@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>工厂模式[SimpleFactory Pattern] - JOY</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="CN1949" />
+  <meta name="description" content="什么是工厂模式？ 本章内容 1. 简单工厂模式（也叫静态工厂模式），2.工厂方法模式，3.抽象工厂模式 特别建议大家可以敲下设计模式的代码，看上去简单" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3" />
+
+
+<link rel="canonical" href="https://SmileFisher.github.io/post/simple-factory/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="工厂模式[SimpleFactory Pattern]" />
+<meta property="og:description" content="什么是工厂模式？ 本章内容 1. 简单工厂模式（也叫静态工厂模式），2.工厂方法模式，3.抽象工厂模式 特别建议大家可以敲下设计模式的代码，看上去简单" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://SmileFisher.github.io/post/simple-factory/" />
+<meta property="article:published_time" content="2019-09-03T16:01:23+08:00" />
+<meta property="article:modified_time" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="name" content="工厂模式[SimpleFactory Pattern]">
+<meta itemprop="description" content="什么是工厂模式？ 本章内容 1. 简单工厂模式（也叫静态工厂模式），2.工厂方法模式，3.抽象工厂模式 特别建议大家可以敲下设计模式的代码，看上去简单">
+<meta itemprop="datePublished" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="dateModified" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="wordCount" content="1804">
+
+
+
+<meta itemprop="keywords" content="设计模式,Java," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="工厂模式[SimpleFactory Pattern]"/>
+<meta name="twitter:description" content="什么是工厂模式？ 本章内容 1. 简单工厂模式（也叫静态工厂模式），2.工厂方法模式，3.抽象工厂模式 特别建议大家可以敲下设计模式的代码，看上去简单"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">JOY</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/">首页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/tags/">书签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/about/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      JOY
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/">首页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/tags/">书签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">工厂模式[SimpleFactory Pattern]</h1>
+      
+      <div class="post-meta">
+        <time datetime="2019-09-03" class="post-time">
+          2019-09-03
+        </time>
+        <div class="post-category">
+            <a href="https://SmileFisher.github.io/categories/java/"> Java </a>
+            <a href="https://SmileFisher.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"> 设计模式 </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+    
+    <div class="post-content">
+      <h2 id="什么是工厂模式">什么是工厂模式？</h2>
+<blockquote>
+<p>本章内容 1. 简单工厂模式（也叫静态工厂模式），2.工厂方法模式，3.抽象工厂模式</p>
+</blockquote>
+<ul>
+<li>特别建议大家可以敲下设计模式的代码，看上去简单，但是敲出来心里会很踏实。</li>
+<li>靠靠靠，觉得真无聊？请直接往下翻到代码和代码中的注释，看完后在来看学术性的东西吧&hellip;.*</li>
+</ul>
+<p>工厂，大家都知道富士康连跳，啊呸！内个&hellip;富士康就是生产的根据别人的订单，用模具来生产别人需要的的嘛！</p>
+<p>那其中“模具”就相当面向对象语言JAVA中具体的类【如果知道面向对象，那么类不就是就代表了一类对象的模板，嗯？】</p>
+<p>对应到下面代码就是Audi.class【奥迪汽车生产模板】
+Benz.class【奔驰汽车生产模板】。那么问题来了：“BMW的中文车名是？” 对 “别摸我！”。我废话真多 ；
+富士康的生产对应的就是SimpleFactory.class。</p>
+<p>那用在设计模式中，那就是用来接收别人的委托，生产委托人类需要的对象。<em>我猜你心里肯定在骂BB了半天，终于讲到重点了！所以还不赶紧那个本子记下来</em></p>
+<p><strong>下面一大堆废话可以看看，也可以看完代码之后再看，会获益匪浅：</strong></p>
+<p>工厂方法模式（英语：<strong>Factory method pattern</strong>）是一种实现了“工厂”概念的面向对象设计模式。就像其他创建型模式一样，它也是处理在不指定对象具体类型 的情况下创建对象的问题。工厂方法模式的实质是“定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类。工厂方法让类的实例化推迟到子类中进行。”</p>
+<h2 id="为什么用工厂模式">为什么用工厂模式?</h2>
+<p>创建一个对象常常需要复杂的过程，所以不适合包含在一个复合对象中。创建对象可能会导致大量的重复代码，可能会需要复合对象访问不到的信息，也可能提供不了足够级别的抽象，还可能并不是复合对象概念的一部分。工厂方法模式通过定义一个单独的创建对象的方法来解决这些问题。由子类实现这个方法来创建具体类型的对象。实现了依赖的反转。</p>
+<p><strong>1.简单工厂模式示例</strong><br>
+重点：没有满足传说中的开闭原则（OCP）,所以他扩展需要修改代码</p>
+<pre><code>测试调用：
+
+public class Client{
+
+    //调用工厂模式，只需要知道需要的创建的类型
+    public static void main(String[] args) {
+        
+        Car car = SimpleFactory.getCar(&quot;audi&quot;);
+        car.bebe();
+
+    }
+
+}
+</code></pre><pre><code>/**
+ * 简单工厂模式
+ */
+public class SimpleFactory{
+
+    //用于生产的生产方法
+    public static Car getCar(String type) {
+
+        if(&quot;audi&quot;.equals(type)) {
+            return new Audi();
+        } else if(&quot;benz&quot;.equals(type)) {
+            return new Benz();
+        } else {
+            return null;
+        }
+
+    }
+
+}
+
+//需要创建的对象
+interface Car{
+    void bebe();
+}
+
+class Audi implements Car{
+    public void bebe(){
+        System.out.println(&quot;audi bebe&quot;);
+    }
+}
+
+class Benz implements Car{
+
+    public void bebe(){
+        System.out.println(&quot;benz bebe&quot;);
+    }
+
+}
+
+</code></pre><h2 id="2-工厂方法模式">2. 工厂方法模式</h2>
+<p>工厂方法模式满足拥有了简单工厂模式的优点，同时又满足了开闭原则，易扩展；</p>
+<h2 id="uml图">UML图</h2>
+<p>没有依赖关系的UML
+<img src="https://i.postimg.cc/L89RnBNm/9381829-dad55cacb0229e5d.png" alt="image.png"></p>
+<p>加上依赖后的UML
+杂乱了许多，但这样带来的好处是<strong>容易扩展</strong>；如需扩展，不用修改代码，增加Mylog接口的实现类，增加LogFactory接口的实现类，就可以实现扩展！<strong>而这是简单工厂模式不能实现的</strong>。
+<img src="https://i.postimg.cc/fR8sXtrm/9381829-43658013f3fd1e5f.png" alt="image.png"></p>
+<h2 id="具体代码分析">具体代码分析</h2>
+<p><strong>需要生产的产品</strong></p>
+<pre><code>
+interface Mylog{
+
+    void print();
+
+}
+
+//具体的产品1
+public class DatabaseLog implements Mylog{
+
+    public void print(){
+        System.out.println(&quot;database log &quot;);
+    }
+
+}
+//具体的产品2
+public class FileEditLog implements Mylog{
+
+    public void print(){
+        System.out.println(&quot;file edited... &quot;);
+    }
+
+}
+</code></pre><p><strong>工厂</strong></p>
+<pre><code>//工厂接口
+interface LogFactory{
+
+    Mylog crateLog();
+
+}
+
+public class DatabaseLogFactory implements LogFactory{
+
+    public Mylog crateLog(){
+        return new DatabaseLog();
+    }
+
+}
+
+public class FileEditLogFactory implements LogFactory{
+
+    public Log crateLog(){
+        return new FileEditLog();
+    }
+
+}
+</code></pre><p><strong>测试</strong></p>
+<pre><code>public class Main{
+
+    public static void main(String[] args) {
+        
+        Mylog log = new DatabaseLogFactory().crateLog();
+        log.print();
+
+    }
+
+}
+</code></pre><h2 id="3抽象工厂模式">3.抽象工厂模式</h2>
+<p>抽象工厂模式有了产品族的概念：</p>
+<ul>
+<li>什么叫产品族呢？
+在抽象工厂模式中，产品族是指由同一个工厂生产的，位于不同产品等级结构中的一组产品，如海尔电器工厂生产的海尔电视机、海尔电冰箱，海尔电视机位于电视机产品等级结构中，海尔电冰箱位于电冰箱产品等级结构中。</li>
+<li>当系统所提供的工厂所需生产的具体产品并不是一个简单的对象，而是多个位于不同产品等级结构中属于不同类型的具体产品时需要使用抽象工厂模式。</li>
+<li>抽象工厂模式是所有形式的工厂模式中最为抽象和最具一般性的一种形态。</li>
+<li>抽象工厂模式与工厂方法模式最大的区别在于，<strong>工厂方法模式针对的是一个产品等级结构</strong>，而<strong>抽象工厂模式则需要面对多个产品等级结构</strong>，一个工厂等级结构可以负责多个不同产品等级结构中的产品对象的创建 。当一个工厂等级结构可以创建出分属于不同产品等级结构的一个产品族中的所有对象时，抽象工厂模式比工厂方法模式更为简单、有效率。</li>
+</ul>
+<h2 id="uml图-1">UML图</h2>
+<p><img src="https://i.postimg.cc/zXS8zPwd/9381829-c6bdd4672bc6b41e.png" alt="image.png"></p>
+<h2 id="源码">源码</h2>
+<p><strong>工厂定义</strong></p>
+<pre><code>public interface AbstractFactory {
+
+    void createProductA();
+    void crateProductB();
+
+}
+</code></pre><p><strong>ContreteFactory1 生产的就是1级的机器人，他fight和run都很厉害</strong></p>
+<pre><code>public class ContreteFactory1 implements AbstractFactory {
+    @Override
+    public void createProductA() {
+        new ProductA1().fight();
+        System.out.println();
+    }
+
+    @Override
+    public void crateProductB() {
+        new ProductB1().run();
+    }
+}
+</code></pre><p><strong>ContreteFactory2  工厂生产的是2级的机器人，他fight和run稍差</strong></p>
+<pre><code>public class ContreteFactory2 implements AbstractFactory {
+    @Override
+    public void createProductA() {
+        new ProductA2().fight();
+        System.out.println();
+    }
+
+    @Override
+    public void crateProductB() {
+        new ProductB2().run();
+    }
+}
+
+
+</code></pre><p><strong>产品族定义</strong></p>
+<pre><code>public interface AbstractPruductA {
+    void fight();
+}
+
+public class ProductA1 implements AbstractPruductA {
+    @Override
+    public void fight() {
+        System.out.println(&quot;productA1 fight&quot;);
+    }
+}
+
+
+public class ProductA2 implements AbstractPruductA {
+    @Override
+    public void fight() {
+        System.out.println(&quot;product A2 fight&quot;);
+    }
+}
+
+</code></pre><pre><code>public interface AbstractProductB {
+    void run();
+}
+
+public class ProductB1 implements AbstractProductB {
+    @Override
+    public void run() {
+        System.out.println(&quot;product B1 run&quot;);
+    }
+}
+
+public class ProductB2 implements AbstractProductB {
+    @Override
+    public void run() {
+        System.out.println(&quot;product B2 run&quot;);
+    }
+}
+
+</code></pre>
+    </div>
+
+    
+    
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://SmileFisher.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+          <a href="https://SmileFisher.github.io/tags/java/">Java</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/singleton-pattern/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">单例模式[Singleton Pattern]</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/breadth-first-search/">
+            <span class="next-text nav-default">广度优先查询</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    <div id="lv-container" class="disqus-comment" data-id="city" data-uid="MTAyMC80NzM3NS8yMzg3NQ==">
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href="https://www.livere.com">comments powered by LiveRe.</a>
+    </noscript>
+   </div>
+
+  
+
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+
+
+<a href="https://SmileFisher.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+       -
+    2020
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        MIZHI
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>适配器模式[Adapter Pattern] - JOY</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="CN1949" />
+  <meta name="description" content="1.为什么要用适配器模式？ 老铁买了个超薄的杜蕾斯牌笔记本电脑（为什么薄的都叫Air? 咳咳，大声告诉我，这个单词durex怎么读？ ），这个电脑" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3" />
+
+
+<link rel="canonical" href="https://SmileFisher.github.io/post/adapter-pattern/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="适配器模式[Adapter Pattern]" />
+<meta property="og:description" content="1.为什么要用适配器模式？ 老铁买了个超薄的杜蕾斯牌笔记本电脑（为什么薄的都叫Air? 咳咳，大声告诉我，这个单词durex怎么读？ ），这个电脑" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://SmileFisher.github.io/post/adapter-pattern/" />
+<meta property="article:published_time" content="2019-09-03T16:01:23+08:00" />
+<meta property="article:modified_time" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="name" content="适配器模式[Adapter Pattern]">
+<meta itemprop="description" content="1.为什么要用适配器模式？ 老铁买了个超薄的杜蕾斯牌笔记本电脑（为什么薄的都叫Air? 咳咳，大声告诉我，这个单词durex怎么读？ ），这个电脑">
+<meta itemprop="datePublished" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="dateModified" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="wordCount" content="1375">
+
+
+
+<meta itemprop="keywords" content="适配器模式,Java," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="适配器模式[Adapter Pattern]"/>
+<meta name="twitter:description" content="1.为什么要用适配器模式？ 老铁买了个超薄的杜蕾斯牌笔记本电脑（为什么薄的都叫Air? 咳咳，大声告诉我，这个单词durex怎么读？ ），这个电脑"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">JOY</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/">首页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/tags/">书签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/about/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      JOY
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/">首页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/tags/">书签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">适配器模式[Adapter Pattern]</h1>
+      
+      <div class="post-meta">
+        <time datetime="2019-09-03" class="post-time">
+          2019-09-03
+        </time>
+        <div class="post-category">
+            <a href="https://SmileFisher.github.io/categories/java/"> Java </a>
+            <a href="https://SmileFisher.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"> 设计模式 </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+    
+    <div class="post-content">
+      <h2 id="1为什么要用适配器模式">1.为什么要用适配器模式？</h2>
+<p>  老铁买了个超薄的杜蕾斯牌笔记本电脑（为什么薄的都叫Air? 咳咳，大声告诉我，这个单词durex怎么读？ ），这个电脑啊，没有网线接口 ，到了后发现连网需要网线；现在要怎么上网呢？GG!!! 不慌，还有 USB 转 RJ45 转接线啊！那么这个线就是适配器。</p>
+<p>  那么在实际开发中也存在这个问题，通常情况下，客户端可以通过目标类的接口访问它所提供的服务。有时，现有的类<strong>可以满足客户类的功能</strong>需要，但是它所<strong>提供的接口不一定是客户类所期望的</strong>，可能参数多一个无用的等，这可能是因为现有类中方法名与目标类中定义的方法名不一致等原因所导致的。在这种情况下，现有的接口需要转化为客户类期望的接口，这样保证了对现有类的重用。</p>
+<p>  如果<strong>不进行这样的转化，客户类就不能利用现有类</strong>所提供的功能，适配器模式可以完成这样的转化。也就是说：<strong>当客户类调用适配器的方法时，在适配器类的内部将调用适配者类的方法</strong>，而这个过程对客户类是透明的，客户类并不直接访问适配者类。因此，<strong>适配器可以使由于接口不兼容而不能交互的类可以一起工作</strong>。</p>
+<h2 id="2什么是适配器模式">2.什么是适配器模式？</h2>
+<p>适配器模式(Adapter Pattern) ：将一个接口转换成客户希望的另一个接口，适配器模式使接口不兼容的那些类可以一起工作，其别名为包装器(Wrapper)。适配器模式既可以作为类结构型模式，也可以作为对象结构型模式。</p>
+<h2 id="3适配器模式包括什么">3.适配器模式包括什么？</h2>
+<p><strong>适配器模式包含如下角色：</strong></p>
+<ul>
+<li>Target：目标抽象类</li>
+<li>Adapter：适配器类</li>
+<li>Adaptee：适配者类</li>
+<li>Client：客户类</li>
+</ul>
+<p>包装类 = 适配器Adapter；</p>
+<p>被包装对象 = 适配者Adaptee = 被适配的类</p>
+<h2 id="4举个栗子">4.举个栗子</h2>
+<p><strong>下面代码UML图</strong></p>
+<p><strong>期望调用Adaptee的reqeust的方法，偏偏它又没有t</strong>，但是修改又存在问题，所以搞了一个<strong>适配器Adapter间接的调用了Adaptee的specialReques</strong>
+<img src="https://upload-images.jianshu.io/upload_images/9381829-9b9a919b2d2c65ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>源码</strong></p>
+<pre><code>//目标接口
+interface Target{
+    //target期望调用request方法
+    public void request();
+
+}
+//适配者类
+class Adaptee{
+
+    public void specialRequest(){
+        //TODO
+        System.out.println(&quot;specialRequest invoke...&quot;);
+    }
+
+}
+
+//适配器类
+class Adatpter extends Adaptee implements Target{
+
+    //目标接口要求调用Request()这个方法名，但源类Adaptee没有方法Request()
+    //因此适配器补充上这个方法名
+    //但实际上Request()只是调用源类Adaptee的SpecificRequest()方法的内容
+    //所以适配器只是将SpecificRequest()方法作了一层封装，封装成Target可以调用的Request()而已
+    public void request(){
+        System.out.println(&quot;request invoke....&quot;);
+        this.specialRequest();
+    }
+}
+
+//客户类
+public class AdatperMain{
+
+    public static void main(String[] args) {
+        Target adapter = new Adatpter();
+        adapter.request();
+    }
+
+}
+</code></pre><h2 id="4-分析">4. 分析</h2>
+<p><strong>优点</strong></p>
+<ol>
+<li>将目标类和适配者类解耦，通过引入一个适配器类来重用现有的适配者类，而无须修改原有代码。</li>
+<li>增加了类的透明性和复用性，将具体的实现封装在适配者类中，对于客户端类来说是透明的，而且提高了适配者的复用性。</li>
+<li>灵活性和扩展性都非常好，通过使用配置文件，可以很方便地更换适配器，也可以在不修改原有代码的基础上增加新的适配器类，完全符合“开闭原则”。</li>
+</ol>
+<p><strong>缺点</strong>
+对于Java、C#等不支持多重继承的语言，一次最多只能适配一个适配者类，而且目标抽象类只能为抽象类，不能为具体类，其使用有一定的局限性，不能将一个适配者类和它的子类都适配到目标接口。</p>
+<h2 id="使用情况">使用情况</h2>
+<ol>
+<li>系统需要使用现有的类，而这些类的接口不符合系统的需要。</li>
+<li>想要建立一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作。</li>
+</ol>
+
+    </div>
+
+    
+    
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://SmileFisher.github.io/tags/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">适配器模式</a>
+          <a href="https://SmileFisher.github.io/tags/java/">Java</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/algorithmic-complexity/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">算法复杂度</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/selection-sort/">
+            <span class="next-text nav-default">选择排序</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    <div id="lv-container" class="disqus-comment" data-id="city" data-uid="MTAyMC80NzM3NS8yMzg3NQ==">
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href="https://www.livere.com">comments powered by LiveRe.</a>
+    </noscript>
+   </div>
+
+  
+
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+
+
+<a href="https://SmileFisher.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+       -
+    2020
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        MIZHI
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

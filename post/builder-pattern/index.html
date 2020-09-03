@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>建造者模式[Builder Pattern] - JOY</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="CN1949" />
+  <meta name="description" content="1. 为什么要有建造者模式? 靠靠靠，觉得真无聊？请直接往下翻到代码和代码中的注释，看完后在来看学术性的东西吧&amp;hellip;. 现实中，大兄弟去买" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3" />
+
+
+<link rel="canonical" href="https://SmileFisher.github.io/post/builder-pattern/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="建造者模式[Builder Pattern]" />
+<meta property="og:description" content="1. 为什么要有建造者模式? 靠靠靠，觉得真无聊？请直接往下翻到代码和代码中的注释，看完后在来看学术性的东西吧&hellip;. 现实中，大兄弟去买" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://SmileFisher.github.io/post/builder-pattern/" />
+<meta property="article:published_time" content="2019-09-03T16:01:23+08:00" />
+<meta property="article:modified_time" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="name" content="建造者模式[Builder Pattern]">
+<meta itemprop="description" content="1. 为什么要有建造者模式? 靠靠靠，觉得真无聊？请直接往下翻到代码和代码中的注释，看完后在来看学术性的东西吧&hellip;. 现实中，大兄弟去买">
+<meta itemprop="datePublished" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="dateModified" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="wordCount" content="1623">
+
+
+
+<meta itemprop="keywords" content="设计模式,Java," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="建造者模式[Builder Pattern]"/>
+<meta name="twitter:description" content="1. 为什么要有建造者模式? 靠靠靠，觉得真无聊？请直接往下翻到代码和代码中的注释，看完后在来看学术性的东西吧&hellip;. 现实中，大兄弟去买"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">JOY</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/">首页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/tags/">书签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/about/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      JOY
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/">首页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/tags/">书签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">建造者模式[Builder Pattern]</h1>
+      
+      <div class="post-meta">
+        <time datetime="2019-09-03" class="post-time">
+          2019-09-03
+        </time>
+        <div class="post-category">
+            <a href="https://SmileFisher.github.io/categories/java/"> Java </a>
+            <a href="https://SmileFisher.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"> 设计模式 </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+    
+    <div class="post-content">
+      <h2 id="1-为什么要有建造者模式">1. 为什么要有建造者模式?</h2>
+<p><strong>靠靠靠，觉得真无聊？请直接往下翻到代码和代码中的注释，看完后在来看学术性的东西吧&hellip;.</strong></p>
+<p>现实中，大兄弟去买汽车，他要关心汽车用的是蓝翔的焊接技术还是绿翔的技术么？不用。他关心的是得到一部完好的汽车；软件开发中也有类似的问题，一个炒鸡复杂的对象，他又N多个属性和方法，但是这些属性和方法不用每个人都去关心，我们关心的是得到相应的对象[建造者模式可以构建不同对象]，然后使用它；</p>
+<h2 id="2-建造者模式是什么">2. 建造者模式是什么？</h2>
+<ul>
+<li>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</li>
+<li>建造者模式是一步一步创建一个复杂的对象，它允许用户只通过指定复杂对象的类型和内容就可以构建它们，用户不需要知道内部的具体构建细节。建造者模式属于对象创建型模式。根据中文翻译的不同，建造者模式又可以称为生成器模式。</li>
+</ul>
+<h2 id="3建造者模式包括什么">3.建造者模式包括什么?</h2>
+<ul>
+<li>Builder：抽象建造者</li>
+<li>ConcreteBuilder：具体建造者</li>
+<li>Director：指挥者</li>
+<li>Product：产品角色</li>
+</ul>
+<h2 id="4-举个栗子">4. 举个栗子</h2>
+<p><em>例子往往可以帮我们很好的理解</em></p>
+<p><strong>例子：</strong>  金拱门(<em>&ldquo;小的觉得麦当劳还好听些&rdquo;</em>)买一份快餐，假设由主食(汉堡/鸡肉卷等)和饮料(可乐/橙汁等)组成，根据顾客不同的要求，服务员需要一步一步的构建出不同的套餐，然后返回将套餐返回给顾客；那么我们是顾客，我们点一分快快餐，也就是Product；服务员（Director）知道我们要的快餐类型后交由具体的厨师制作（ConcreteBuilder）;最后将一份快餐返还给顾客手中。下面的代码大概就是这样一个流程；</p>
+<p>先来个<strong>UML</strong>图压压惊，有个整体的了解
+<img src="https://i.postimg.cc/hPqxB2TG/9381829-386d05f766c6d910.png" alt="image.png"></p>
+<pre><code>//具体套餐【Product：产品角色】
+class Meal{
+    String food;
+    String drink;
+
+    public void setDrink(String drink) {
+        this.drink = drink;
+    }
+    public void setFood(String food) {
+        this.food = food;
+    }
+
+    @Override
+    public String toString() {
+        return food+drink;
+    }
+}
+//【Builder：抽象建造者】
+abstract class Builder{
+    Meal meal = new Meal();
+    //step1 选择主食
+    abstract void buildFood();
+
+    //step2 选择饮料
+    abstract void buildDrink();
+
+    public Meal getMeal() {
+        return meal;
+    }
+}
+
+//具体的A套餐构建者【ConcreteBuilder：具体建造者】
+class ConcreteBuilderA extends Builder{
+
+    void buildFood(){
+        meal.setFood(&quot;foodA&quot;);
+    }
+
+    void buildDrink(){
+        meal.setDrink(&quot;drinkA&quot;);
+    }
+
+}
+//具体的B套餐构建者【ConcreteBuilder：具体建造者】
+class ConcreteBuilderB extends Builder{
+
+    void buildFood(){
+        meal.setFood(&quot;foodB&quot;);
+    }
+
+    void buildDrink(){
+        meal.setDrink(&quot;drinkB&quot;);
+    }
+
+}
+
+//服务员【Director：指挥者】
+class Director{
+    void construct(Builder builder){
+        builder.buildFood();
+        builder.buildDrink();
+    }
+}
+
+//具体实施调用
+public class Main{
+
+    public static void main(String[] args) {
+        Director director = new Director();
+        Builder builder = new ConcreteBuilderA();
+        director.construct(builder);
+        System.out.println(builder.getMeal());
+
+    }
+
+}
+
+
+</code></pre><h2 id="5-分析">5. 分析</h2>
+<ul>
+<li>
+<h2 id="建造者模式的指挥者类director的作用两个">建造者模式的<strong>指挥者类Director的作用</strong>两个：</h2>
+</li>
+</ul>
+<ol>
+<li>一方面它隔离了客户与生产过程；</li>
+<li>另一方面它负责控制产品的生成过程。指挥者针对抽象建造者编程，客户端只需要知道具体建造者的类型，即可通过指挥者类调用建造者的相关方法，返回一个完整的产品对象</li>
+</ol>
+<ul>
+<li>
+<h2 id="优点">优点：</h2>
+</li>
+</ul>
+<ol>
+<li>在建造者模式中， 客户端不必知道产品内部组成的细节，将产品本身与产品的创建过程解耦，使得相同的创建过程可以创建不同的产品对象。</li>
+<li>每一个具体建造者都相对独立，而与其他的具体建造者无关，因此可以很方便地替换具体建造者或增加新的具体建造者， 用户使用不同的具体建造者即可得到不同的产品对象 。</li>
+<li>可以更加精细地控制产品的创建过程 。将复杂产品的创建步骤分解在不同的方法中，使得创建过程更加清晰，也更方便使用程序来控制创建过程。</li>
+<li>增加新的具体建造者无须修改原有类库的代码，指挥者类针对抽象建造者类编程，系统扩展方便，符合“开闭原则”。</li>
+</ol>
+<ul>
+<li>
+<h2 id="缺点">缺点</h2>
+</li>
+</ul>
+<ol>
+<li>建造者模式所创建的产品一般具有较多的共同点，其组成部分相似，如果产品之间的差异性很大，则不适合使用建造者模式，因此其使用范围受到一定的限制。</li>
+<li>如果产品的内部变化复杂，可能会导致需要定义很多具体建造者类来实现这种变化，导致系统变得很庞大。</li>
+</ol>
+<ul>
+<li>
+<h2 id="适用环境">适用环境</h2>
+</li>
+</ul>
+<ol>
+<li>需要生成的产品对象有复杂的内部结构，这些产品对象通常包含多个成员属性。</li>
+<li>需要生成的产品对象的属性相互依赖，需要指定其生成顺序。</li>
+<li>对象的创建过程独立于创建该对象的类。在建造者模式中引入了指挥者类，将创建过程封装在指挥者类中，而不在建造者类中。</li>
+<li>隔离复杂对象的创建和使用，并使得相同的创建过程可以创建不同的产品。</li>
+</ol>
+<h2 id="看完老子还是一脸懵逼请你留下宝贵的意见-or-舞动你的键盘把例子来一个遍">看完老子还是一脸懵逼？请你留下宝贵的意见 OR 舞动你的键盘把例子来一个遍</h2>
+
+    </div>
+
+    
+    
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://SmileFisher.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+          <a href="https://SmileFisher.github.io/tags/java/">Java</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/breadth-first-search/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">广度优先查询</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/quick-sort/">
+            <span class="next-text nav-default">快速排序</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    <div id="lv-container" class="disqus-comment" data-id="city" data-uid="MTAyMC80NzM3NS8yMzg3NQ==">
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href="https://www.livere.com">comments powered by LiveRe.</a>
+    </noscript>
+   </div>
+
+  
+
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+
+
+<a href="https://SmileFisher.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+       -
+    2020
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        MIZHI
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

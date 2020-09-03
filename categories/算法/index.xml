@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>算法 on JOY</title>
+    <link>https://SmileFisher.github.io/categories/%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 算法 on JOY</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 03 Sep 2019 16:01:23 +0800</lastBuildDate>
+    
+	<atom:link href="https://SmileFisher.github.io/categories/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>二分查找</title>
+      <link>https://SmileFisher.github.io/post/binary-search/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/binary-search/</guid>
+      <description>1. 二分搜索是什么？ 二分搜索（英语：binary search），也叫折半搜索（英语：half-interval search），是一种在有序数组</description>
+    </item>
+    
+    <item>
+      <title>广度优先查询</title>
+      <link>https://SmileFisher.github.io/post/breadth-first-search/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/breadth-first-search/</guid>
+      <description>1. BFS是什么？ BFS是一种[盲目搜索是盲目搜索法，目的是系统地展开并检查中的所有节点，以找寻结果。 举例来说：假设从A城市到B城市有多种转车</description>
+    </item>
+    
+    <item>
+      <title>快速排序</title>
+      <link>https://SmileFisher.github.io/post/quick-sort/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/quick-sort/</guid>
+      <description>1.快速排序是神马？ 快速排序使用[分治法]（Divide and conquer）策略来把一个[序列]（list）分为两个子序列（sub-lists</description>
+    </item>
+    
+    <item>
+      <title>算法复杂度</title>
+      <link>https://SmileFisher.github.io/post/algorithmic-complexity/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/algorithmic-complexity/</guid>
+      <description>1. 什么是时间复杂度？ 从时间维度来说：是指执行当前算法所消耗的时间，我们通常称之为 “时间复杂度”。[ 就个人而言，本人觉得时间复杂度是评估代码在</description>
+    </item>
+    
+    <item>
+      <title>选择排序</title>
+      <link>https://SmileFisher.github.io/post/selection-sort/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/selection-sort/</guid>
+      <description>1.什么是选择排序? 选择排序（Selection sort）是一种简单直观的[排序算法]。首先在未排序序列中找到最小（大）元素，存放到排序序列</description>
+    </item>
+    
+  </channel>
+</rss>

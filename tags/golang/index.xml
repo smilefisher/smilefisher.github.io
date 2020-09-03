@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>golang on JOY</title>
+    <link>https://SmileFisher.github.io/tags/golang/</link>
+    <description>Recent content in golang on JOY</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 03 Sep 2019 16:01:23 +0800</lastBuildDate>
+    
+	<atom:link href="https://SmileFisher.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>golang启动多个端口</title>
+      <link>https://SmileFisher.github.io/post/golang%E5%90%AF%E5%8A%A8%E5%A4%9A%E4%B8%AA%E7%AB%AF%E5%8F%A3/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/golang%E5%90%AF%E5%8A%A8%E5%A4%9A%E4%B8%AA%E7%AB%AF%E5%8F%A3/</guid>
+      <description>1. 使用NewServeMux ，启动多个端口 package main import ( &amp;quot;fmt&amp;quot; &amp;quot;github.com/gin-gonic/gin&amp;quot; &amp;quot;net/http&amp;quot; ) func main() { //gin 框架 engin := gin.Default() engin.GET(&amp;quot;/api&amp;quot;, func(context *gin.Context) { fmt.Println(context.Request.URL, context.Request.Host) }) //浏览器访问 http://localhost:8080/api mux := http.NewServeMux() mux.HandleFunc(&amp;quot;/api&amp;quot;, myHandler) go http.ListenAndServe(&amp;quot;:8080&amp;quot;, mux) //浏览器访问 http://localhost:8081/api mux1</description>
+    </item>
+    
+  </channel>
+</rss>

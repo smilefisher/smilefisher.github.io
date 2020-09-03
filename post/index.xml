@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on JOY</title>
+    <link>https://SmileFisher.github.io/post/</link>
+    <description>Recent content in Posts on JOY</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 03 Sep 2019 16:01:23 +0800</lastBuildDate>
+    
+	<atom:link href="https://SmileFisher.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>docker离线部署</title>
+      <link>https://SmileFisher.github.io/post/docker%E7%A6%BB%E7%BA%BF%E9%83%A8%E7%BD%B2%E5%8F%8A%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/docker%E7%A6%BB%E7%BA%BF%E9%83%A8%E7%BD%B2%E5%8F%8A%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF/</guid>
+      <description>问题： centos7 离线部署docker, 离线部署docker后，设置开启自启。 解决如下： 1. 首先看这篇官方文档 https://docs.docker.com/install/linux/docker-ce/binaries/#install-static-binaries 也可以直接看下面截图, 文章写了离线部署的</description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch入门记录</title>
+      <link>https://SmileFisher.github.io/post/elasticsearch-start/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/elasticsearch-start/</guid>
+      <description>ES 学习记录 ES是一个基于RESTful web接口并且构建在Apache Lucene之上的开源分布式搜索引擎。 同时ES还是一个分布式文档数据库</description>
+    </item>
+    
+    <item>
+      <title>golang启动多个端口</title>
+      <link>https://SmileFisher.github.io/post/golang%E5%90%AF%E5%8A%A8%E5%A4%9A%E4%B8%AA%E7%AB%AF%E5%8F%A3/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/golang%E5%90%AF%E5%8A%A8%E5%A4%9A%E4%B8%AA%E7%AB%AF%E5%8F%A3/</guid>
+      <description>1. 使用NewServeMux ，启动多个端口 package main import ( &amp;quot;fmt&amp;quot; &amp;quot;github.com/gin-gonic/gin&amp;quot; &amp;quot;net/http&amp;quot; ) func main() { //gin 框架 engin := gin.Default() engin.GET(&amp;quot;/api&amp;quot;, func(context *gin.Context) { fmt.Println(context.Request.URL, context.Request.Host) }) //浏览器访问 http://localhost:8080/api mux := http.NewServeMux() mux.HandleFunc(&amp;quot;/api&amp;quot;, myHandler) go http.ListenAndServe(&amp;quot;:8080&amp;quot;, mux) //浏览器访问 http://localhost:8081/api mux1</description>
+    </item>
+    
+    <item>
+      <title>二分查找</title>
+      <link>https://SmileFisher.github.io/post/binary-search/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/binary-search/</guid>
+      <description>1. 二分搜索是什么？ 二分搜索（英语：binary search），也叫折半搜索（英语：half-interval search），是一种在有序数组</description>
+    </item>
+    
+    <item>
+      <title>单例模式[Singleton Pattern]</title>
+      <link>https://SmileFisher.github.io/post/singleton-pattern/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/singleton-pattern/</guid>
+      <description>1.什么是单例？为什么需要单例? 许多时候整个系统只需要拥有一个的全局对象这样有利于我们协调系统整体的行为。 比如在某个服务器&amp;rdquo;)程</description>
+    </item>
+    
+    <item>
+      <title>工厂模式[SimpleFactory Pattern]</title>
+      <link>https://SmileFisher.github.io/post/simple-factory/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/simple-factory/</guid>
+      <description>什么是工厂模式？ 本章内容 1. 简单工厂模式（也叫静态工厂模式），2.工厂方法模式，3.抽象工厂模式 特别建议大家可以敲下设计模式的代码，看上去简单</description>
+    </item>
+    
+    <item>
+      <title>广度优先查询</title>
+      <link>https://SmileFisher.github.io/post/breadth-first-search/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/breadth-first-search/</guid>
+      <description>1. BFS是什么？ BFS是一种[盲目搜索是盲目搜索法，目的是系统地展开并检查中的所有节点，以找寻结果。 举例来说：假设从A城市到B城市有多种转车</description>
+    </item>
+    
+    <item>
+      <title>建造者模式[Builder Pattern]</title>
+      <link>https://SmileFisher.github.io/post/builder-pattern/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/builder-pattern/</guid>
+      <description>1. 为什么要有建造者模式? 靠靠靠，觉得真无聊？请直接往下翻到代码和代码中的注释，看完后在来看学术性的东西吧&amp;hellip;. 现实中，大兄弟去买</description>
+    </item>
+    
+    <item>
+      <title>快速排序</title>
+      <link>https://SmileFisher.github.io/post/quick-sort/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/quick-sort/</guid>
+      <description>1.快速排序是神马？ 快速排序使用[分治法]（Divide and conquer）策略来把一个[序列]（list）分为两个子序列（sub-lists</description>
+    </item>
+    
+    <item>
+      <title>手机热点获取树莓派IP</title>
+      <link>https://SmileFisher.github.io/post/respberry-ip-connect/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/respberry-ip-connect/</guid>
+      <description>解决问题 Raspberry Pi(中文名为“树莓派”,简写为RPi，是为学习计算机编程教育而设计)，只有信用卡大小的微型电脑，其系统基于Linux。 在手机开热</description>
+    </item>
+    
+    <item>
+      <title>策略模式[Strategy Pattern]</title>
+      <link>https://SmileFisher.github.io/post/strategy-pattern/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/strategy-pattern/</guid>
+      <description>1. 故事背景 假如你们公司要开发一个5v5对战游戏,像LOL， 要你设计开发那么多英雄，你会怎那么设计呢？ 两个类都继承了抽象类Element， 复用</description>
+    </item>
+    
+    <item>
+      <title>算法复杂度</title>
+      <link>https://SmileFisher.github.io/post/algorithmic-complexity/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/algorithmic-complexity/</guid>
+      <description>1. 什么是时间复杂度？ 从时间维度来说：是指执行当前算法所消耗的时间，我们通常称之为 “时间复杂度”。[ 就个人而言，本人觉得时间复杂度是评估代码在</description>
+    </item>
+    
+    <item>
+      <title>适配器模式[Adapter Pattern]</title>
+      <link>https://SmileFisher.github.io/post/adapter-pattern/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/adapter-pattern/</guid>
+      <description>1.为什么要用适配器模式？ 老铁买了个超薄的杜蕾斯牌笔记本电脑（为什么薄的都叫Air? 咳咳，大声告诉我，这个单词durex怎么读？ ），这个电脑</description>
+    </item>
+    
+    <item>
+      <title>选择排序</title>
+      <link>https://SmileFisher.github.io/post/selection-sort/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/selection-sort/</guid>
+      <description>1.什么是选择排序? 选择排序（Selection sort）是一种简单直观的[排序算法]。首先在未排序序列中找到最小（大）元素，存放到排序序列</description>
+    </item>
+    
+  </channel>
+</rss>

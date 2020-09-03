@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Elasticsearch入门记录 - JOY</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="CN1949" />
+  <meta name="description" content="ES 学习记录 ES是一个基于RESTful web接口并且构建在Apache Lucene之上的开源分布式搜索引擎。 同时ES还是一个分布式文档数据库" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3" />
+
+
+<link rel="canonical" href="https://SmileFisher.github.io/post/elasticsearch-start/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Elasticsearch入门记录" />
+<meta property="og:description" content="ES 学习记录 ES是一个基于RESTful web接口并且构建在Apache Lucene之上的开源分布式搜索引擎。 同时ES还是一个分布式文档数据库" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://SmileFisher.github.io/post/elasticsearch-start/" />
+<meta property="article:published_time" content="2019-09-03T16:01:23+08:00" />
+<meta property="article:modified_time" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="name" content="Elasticsearch入门记录">
+<meta itemprop="description" content="ES 学习记录 ES是一个基于RESTful web接口并且构建在Apache Lucene之上的开源分布式搜索引擎。 同时ES还是一个分布式文档数据库">
+<meta itemprop="datePublished" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="dateModified" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="wordCount" content="3657">
+
+
+
+<meta itemprop="keywords" content="Elasticsearch," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Elasticsearch入门记录"/>
+<meta name="twitter:description" content="ES 学习记录 ES是一个基于RESTful web接口并且构建在Apache Lucene之上的开源分布式搜索引擎。 同时ES还是一个分布式文档数据库"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">JOY</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/">首页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/tags/">书签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/about/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      JOY
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/">首页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/tags/">书签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Elasticsearch入门记录</h1>
+      
+      <div class="post-meta">
+        <time datetime="2019-09-03" class="post-time">
+          2019-09-03
+        </time>
+        <div class="post-category">
+            <a href="https://SmileFisher.github.io/categories/elasticsearch/"> Elasticsearch </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+    
+    <div class="post-content">
+      <h2 id="es-学习记录">ES 学习记录</h2>
+<blockquote>
+<p>ES是一个基于RESTful web接口并且构建在Apache Lucene之上的开源分布式搜索引擎。</p>
+</blockquote>
+<blockquote>
+<p>同时ES还是一个分布式文档数据库，其中每个字段均可被索引，而且每个字段的数据均可被搜索，能够横向扩展至数以百计的服务器存储以及处理PB级的数据。</p>
+</blockquote>
+<blockquote>
+<p>可以在极短的时间内存储、搜索和分析大量的数据。通常作为具有复杂搜索场景情况下的核心发动机。</p>
+</blockquote>
+<p><strong>环境</strong></p>
+<ul>
+<li>Centos7 X64</li>
+<li>ES V7.3.0</li>
+<li>Logstash-7.3.0</li>
+</ul>
+<p><strong>注意：</strong></p>
+<ul>
+<li>请不要使用root用户启动，ES 为了安全，禁止使用root账户启动</li>
+<li>内存最好大一点,即便是虚拟机也最好大于3G， 不然可能会启动失败</li>
+<li>ES入门教程	http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html</li>
+</ul>
+<h2 id="1-es-下载安装">1. ES 下载安装</h2>
+<p>官方安装 <a href="https://www.elastic.co/cn/downloads/elasticsearch">https://www.elastic.co/cn/downloads/elasticsearch</a></p>
+<ol>
+<li>下载自己的版本</li>
+<li>解压 tar -zxvf xxx</li>
+<li>运行 Run bin/elasticsearch (or bin\elasticsearch.bat on Windows)</li>
+<li>测试是否安装成功命令。 curl http://localhost:9200/ ( 如果是windows系统, 直接在浏览器访问http://localhost:9200/ )</li>
+</ol>
+<h2 id="中文分词插件">中文分词插件</h2>
+<p>中文分词插件安装
+<a href="https://github.com/medcl/elasticsearch-analysis-ik">https://github.com/medcl/elasticsearch-analysis-ik</a></p>
+<pre><code>安装命令
+
+sudo ./bin/elasticsearch-plugin install 
+https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.3.0/elasticsearch-analysis-ik-7.3.0.zip
+
+</code></pre><h2 id="es-中-index-type-document-概念">ES 中 index type document 概念</h2>
+<p>对于熟悉mysql的:</p>
+<ol>
+<li>index 可以理解为 数据库</li>
+<li>type 理解为 表 [现版本的ES中, 每一个index,只能有一个type; 有废弃的迹象]</li>
+<li>document 理解为 表中一条记录</li>
+</ol>
+<h2 id="2-命令查询">2 命令查询</h2>
+<h2 id="21查看所有index">2.1查看所有index</h2>
+<blockquote>
+<p>curl是一种命令行工具，作用是发出网络请求，然后得到和提取数据，显示在&quot;标准输出&rdquo;（stdout）上面。 可以理解为命令行版的postman
+<a href="http://www.ruanyifeng.com/blog/2011/09/curl.html">http://www.ruanyifeng.com/blog/2011/09/curl.html</a></p>
+</blockquote>
+<pre><code>curl -X GET 'http://localhost:9200/_cat/indices?v'
+</code></pre><h2 id="22新建index">2.2新建index</h2>
+<pre><code>curl -X PUT 'localhost:9200/weather'
+</code></pre><h2 id="23删除">2.3删除</h2>
+<pre><code>curl -X DELETE 'localhost:9200/weather'
+</code></pre><h2 id="24-post增加document">2.4 POST增加Document</h2>
+<p>localhost:9200/{index}/{type}</p>
+<pre><code>curl -H &quot;Content-Type: application/json&quot; -X POST 'localhost:9200/weather/20180101' -d '
+{
+  &quot;date&quot;: &quot;老六&quot;,
+  &quot;title&quot;: &quot;golang&quot;,
+  &quot;desc&quot;: &quot;go开发工程师&quot;
+}' 
+</code></pre><h2 id="25-put-方式--增加document">2.5 PUT 方式  增加document</h2>
+<blockquote>
+<p>localhost:9200/{index}/{type}/{id}</p>
+</blockquote>
+<pre><code>curl  -H &quot;Content-Type: application/json&quot;  -X PUT 'localhost:9200/weather/20180101/1' -d '
+{
+  &quot;date&quot;: &quot;张三1&quot;,
+  &quot;title&quot;: &quot;工程师1&quot;,
+  &quot;desc&quot;: &quot;晴天1&quot;
+}' 
+</code></pre><h2 id="26-查看记录">2.6 查看记录</h2>
+<p>查询index = weather, type = 20180101, id = 1 的记录</p>
+<pre><code>curl 'localhost:9200/weather/20180101/1'
+
+</code></pre><p>删除</p>
+<pre><code>curl -XDELETE 'localhost:9200/weather/20180101/1'
+</code></pre><p>更新[存在更新，不存在新建]</p>
+<pre><code>curl -H &quot;Content-Type: application/json&quot; -XPUT 'localhost:9200/weather/20180101/1' -d '
+{
+&quot;date&quot;:&quot;lisi&quot;,
+&quot;title&quot;:&quot;title2&quot;,
+&quot;desc&quot;:&quot;dadfsaf&quot;
+}'
+
+</code></pre><h2 id="返回所有记录">返回所有记录</h2>
+<pre><code>
+curl 'localhost:9200/weather/20180101/_search'
+
+# 20180101 为type,现规定一个index只能有一个type, 所以不带type, 也可以查询所有记录
+curl 'localhost:9200/weather/_search'
+
+# 返回结果 
+# 参数官方解释 https://www.elastic.co/guide/cn/elasticsearch/guide/current/empty-search.html
+# 可以留意下took， 表示查询花费的时间
+# score 标识匹配程度， 返回记录中，每一条都有一个 _score ，记录以此降序
+{
+    &quot;took&quot;:4,
+    &quot;timed_out&quot;:false,
+    &quot;_shards&quot;:{
+        &quot;total&quot;:1,
+        &quot;successful&quot;:1,
+        &quot;skipped&quot;:0,
+        &quot;failed&quot;:0
+    },
+    &quot;hits&quot;:{
+        &quot;total&quot;:{
+            &quot;value&quot;:3,
+            &quot;relation&quot;:&quot;eq&quot;
+        },
+        &quot;max_score&quot;:1,
+        &quot;hits&quot;:[
+            {
+                &quot;_index&quot;:&quot;weather&quot;,
+                &quot;_type&quot;:&quot;20180101&quot;,
+                &quot;_id&quot;:&quot;IbOjrmwBucBWZ7yGLubW&quot;,
+                &quot;_score&quot;:1,
+                &quot;_source&quot;:{
+                    &quot;date&quot;:&quot;张三&quot;,
+                    &quot;title&quot;:&quot;工程师&quot;,
+                    &quot;desc&quot;:&quot;晴天&quot;
+                }
+            },
+            {
+                &quot;_index&quot;:&quot;weather&quot;,
+                &quot;_type&quot;:&quot;20180101&quot;,
+                &quot;_id&quot;:&quot;JLOtrmwBucBWZ7yGrubi&quot;,
+                &quot;_score&quot;:1,
+                &quot;_source&quot;:{
+                    &quot;date&quot;:&quot;张三&quot;,
+                    &quot;title&quot;:&quot;工程师&quot;,
+                    &quot;desc&quot;:&quot;晴天&quot;
+                }
+            },
+            {
+                &quot;_index&quot;:&quot;weather&quot;,
+                &quot;_type&quot;:&quot;20180101&quot;,
+                &quot;_id&quot;:&quot;1&quot;,
+                &quot;_score&quot;:1,
+                &quot;_source&quot;:{
+                    &quot;date&quot;:&quot;lisi&quot;,
+                    &quot;title&quot;:&quot;title2&quot;,
+                    &quot;desc&quot;:&quot;dadfsaf&quot;
+                }
+            }
+        ]
+    }
+}
+
+
+</code></pre><h2 id="3-复杂搜索">3 复杂搜索</h2>
+<h2 id="31-查询带有-晴-的记录-match-表示desc字段包含-晴">3.1 查询带有 “晴” 的记录， match 表示desc字段包含 “晴”</h2>
+<pre><code>
+curl -H 'Content-Type: application/Json' 'localhost:9200/weather/20180101/_search' -d '
+ {
+  &quot;query&quot;: {&quot;match&quot;: {&quot;desc&quot;:&quot;晴&quot;}}
+ }'
+
+
+
+</code></pre><h4 id="32-数据量太大只想要前几条数据-size大小">3.2 数据量太大,只想要前几条数据？ size：大小</h4>
+<pre><code>curl -H 'Content-Type: application/Json' 'localhost:9200/weather/20180101/_search' -d '
+ {
+  &quot;query&quot;: {&quot;match&quot;: {&quot;desc&quot;:&quot;晴&quot;}},
+  &quot;size&quot; : 1
+ }'
+
+</code></pre><h4 id="33-不想要前十条数据-from-偏移默认0-本例表示从位置1开始查询一条记录">3.3 不想要前十条数据？ from： 偏移，默认0; 本例表示从位置1开始，查询一条记录</h4>
+<pre><code>curl -H 'Content-Type: application/Json' 'localhost:9200/weather/20180101/_search' -d '
+ {
+  &quot;query&quot;: {&quot;match&quot;: {&quot;desc&quot;:&quot;晴&quot;}},
+  &quot;from&quot;: 1,
+  &quot;size&quot; : 1
+ }'
+
+</code></pre><h4 id="34-逻辑or运算">3.4 逻辑OR运算</h4>
+<p>工 和 师 之间多了一个空格，标识逻辑OR查询</p>
+<pre><code>
+curl -H 'Content-Type: application/Json' 'localhost:9200/weather/20180101/_search' -d '
+{
+  &quot;query&quot;: {&quot;match&quot;: {&quot;title&quot;: &quot;工 师&quot;}}
+}'
+
+
+# 下面这个是不可以的, 多个field的查询 需要用bool查询，往下看
+curl -H 'Content-Type: application/Json' 'localhost:9200/weather/20180101/_search' -d '
+{
+  &quot;query&quot;: {&quot;match&quot;: {&quot;desc&quot;: &quot;工程师&quot;, &quot;title&quot;:&quot;golang&quot; }}
+}'
+
+
+</code></pre><h2 id="35-逻辑and运算-must-should-must_not-filter">3.5 逻辑AND运算， must, should, must_not, filter</h2>
+<p>must :</p>
+<pre><code>curl -H 'Content-Type: application/Json' 'localhost:9200/weather/20180101/_search' -d '
+  {
+    &quot;query&quot;:{
+      &quot;bool&quot;: {
+        &quot;must&quot;: [
+          {&quot;match&quot;:{&quot;desc&quot;:&quot;js&quot;}},
+          {&quot;match&quot;:{&quot;desc&quot;:&quot;工程师&quot;}}
+        ]
+      }
+    }
+  }'
+</code></pre><pre><code># 下面语句是 must: desc字段包含 &quot;工程师&quot;, must_not: title字段不包含&quot;golang&quot;的 docucument
+# must_not 语句不会影响评分； 它的作用只是将不相关的文档排除。
+# 所有 must 语句必须匹配，所有 must_not 语句都必须不匹配
+curl -H 'Content-Type: application/Json' 'localhost:9200/weather/20180101/_search' -d '
+  {
+    &quot;query&quot;:{
+      &quot;bool&quot;: {
+        &quot;must&quot;: {&quot;match&quot;: {&quot;desc&quot;:&quot;工程师&quot;}},
+        &quot;must_not&quot;:{&quot;match&quot;: {&quot;title&quot;:&quot;golang&quot;}} 
+      }
+    }
+  }'
+
+# 结果
+  {
+    &quot;took&quot;:2,
+    &quot;timed_out&quot;:false,
+    &quot;_shards&quot;:{
+        &quot;total&quot;:1,
+        &quot;successful&quot;:1,
+        &quot;skipped&quot;:0,
+        &quot;failed&quot;:0
+    },
+    &quot;hits&quot;:{
+        &quot;total&quot;:{
+            &quot;value&quot;:2,
+            &quot;relation&quot;:&quot;eq&quot;
+        },
+        &quot;max_score&quot;:1.7263287,
+        &quot;hits&quot;:[
+            {
+                &quot;_index&quot;:&quot;weather&quot;,
+                &quot;_type&quot;:&quot;20180101&quot;,
+                &quot;_id&quot;:&quot;3ffesWwBCUKd2dtSgQyB&quot;,
+                &quot;_score&quot;:1.7263287,
+                &quot;_source&quot;:{
+                    &quot;date&quot;:&quot;王五&quot;,
+                    &quot;title&quot;:&quot;JavaScript&quot;,
+                    &quot;desc&quot;:&quot;js开发工程师&quot;
+                }
+            },
+            {
+                &quot;_index&quot;:&quot;weather&quot;,
+                &quot;_type&quot;:&quot;20180101&quot;,
+                &quot;_id&quot;:&quot;3PfesWwBCUKd2dtSIAzZ&quot;,
+                &quot;_score&quot;:1.5912248,
+                &quot;_source&quot;:{
+                    &quot;date&quot;:&quot;李四&quot;,
+                    &quot;title&quot;:&quot;java&quot;,
+                    &quot;desc&quot;:&quot;扎瓦开发工程师&quot;
+                }
+            }
+        ]
+    }
+}
+
+# should 一个文档不必包含 扎瓦 或 js 这两个词项，但如果一旦包含，我们就认为它们 更相关 ：
+curl -H 'Content-Type: application/Json' 'localhost:9200/weather/20180101/_search' -d '
+  {
+    &quot;query&quot;:{
+      &quot;bool&quot;: {
+        &quot;must&quot;: {&quot;match&quot;: {&quot;desc&quot;:&quot;工程师&quot;}},
+        &quot;must_not&quot;:{&quot;match&quot;: {&quot;title&quot;:&quot;golang&quot;}},
+        &quot;should&quot;: [
+          {&quot;match&quot;: {&quot;desc&quot;:&quot;扎瓦&quot;}},
+          {&quot;match&quot;: {&quot;desc&quot;:&quot;js&quot;}}
+        ]
+      }
+    }
+  }'
+
+  #携带should 查询的结果，虽然返回的记录相同，但是他们的得分更高
+  {
+    &quot;took&quot;:21,
+    &quot;timed_out&quot;:false,
+    &quot;_shards&quot;:{
+        &quot;total&quot;:1,
+        &quot;successful&quot;:1,
+        &quot;skipped&quot;:0,
+        &quot;failed&quot;:0
+    },
+    &quot;hits&quot;:{
+        &quot;total&quot;:{
+            &quot;value&quot;:2,
+            &quot;relation&quot;:&quot;eq&quot;
+        },
+        &quot;max_score&quot;:3.9487753,
+        &quot;hits&quot;:[
+            {
+                &quot;_index&quot;:&quot;weather&quot;,
+                &quot;_type&quot;:&quot;20180101&quot;,
+                &quot;_id&quot;:&quot;3PfesWwBCUKd2dtSIAzZ&quot;,
+                &quot;_score&quot;:3.9487753,
+                &quot;_source&quot;:{
+                    &quot;date&quot;:&quot;李四&quot;,
+                    &quot;title&quot;:&quot;java&quot;,
+                    &quot;desc&quot;:&quot;扎瓦开发工程师&quot;
+                }
+            },
+            {
+                &quot;_index&quot;:&quot;weather&quot;,
+                &quot;_type&quot;:&quot;20180101&quot;,
+                &quot;_id&quot;:&quot;3ffesWwBCUKd2dtSgQyB&quot;,
+                &quot;_score&quot;:3.0051887,
+                &quot;_source&quot;:{
+                    &quot;date&quot;:&quot;王五&quot;,
+                    &quot;title&quot;:&quot;JavaScript&quot;,
+                    &quot;desc&quot;:&quot;js开发工程师&quot;
+                }
+            }
+        ]
+    }
+}
+
+
+</code></pre><h2 id="match-标识分词匹配term标识完全匹配-range-标识范围">match 标识分词匹配，term标识完全匹配， range 标识范围</h2>
+<h2 id="filtered-已经被-bool-query-替代">filtered 已经被 bool query 替代</h2>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-filtered-query.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-filtered-query.html</a></p>
+<pre><code>
+curl -H 'Content-Type: application/Json'  'localhost:9200/weather/20180101/_search' -d '
+  {
+    &quot;query&quot;: {
+      &quot;bool&quot;: {
+          &quot;must&quot;: {
+            &quot;match&quot;:{
+                &quot;desc&quot;: &quot;工程师&quot;
+              }
+          },
+          &quot;filter&quot;: {
+            &quot;term&quot;: {
+              &quot;title&quot;:&quot;golang&quot;
+            }
+          }
+      }
+    }
+  }
+'
+
+curl -H 'Content-Type: application/Json'  'localhost:9200/weather/20180101/_search' -d '
+  {
+    &quot;query&quot;: {
+      &quot;term&quot;: {
+          &quot;title&quot;:&quot;golang&quot;
+      }
+    }
+  }'
+
+
+curl -H 'Content-Type: application/Json'  'localhost:9200/weather/20180101/_search' -d '
+  {
+    &quot;query&quot;: {
+      &quot;bool&quot;: {
+         
+          &quot;filter&quot;: {
+            &quot;match_phrase&quot;: {
+              &quot;desc&quot;: {&quot;query&quot;: &quot;工程师&quot;}
+            }
+          }
+      }
+    }
+  }
+'
+
+
+</code></pre><h4 id="用到这里-已经使用过两个关键字-_cat-_search">用到这里 已经使用过两个关键字 _cat, _search</h4>
+<h4 id="4-es-同步-mysql">4 ES 同步 Mysql</h4>
+<blockquote>
+<p>方案比较 <a href="https://my.oschina.net/u/4000872/blog/2252620">https://my.oschina.net/u/4000872/blog/2252620</a></p>
+</blockquote>
+<h2 id="41-logstash-安装">4.1 logstash 安装</h2>
+<blockquote>
+<p>官方安装文档 <a href="https://www.elastic.co/cn/downloads/logstash">https://www.elastic.co/cn/downloads/logstash</a></p>
+<ol>
+<li>下载</li>
+<li>解压</li>
+<li>配置一个简单的文件</li>
+<li>运行</li>
+</ol>
+</blockquote>
+<h2 id="42-配置">4.2 配置</h2>
+<pre><code># jdbc.conf
+
+# 输入部分
+input {
+  stdin {}
+  jdbc {
+    # mysql数据库驱动
+    jdbc_driver_library =&gt; &quot;//home/ccnn/logstash-7.3.0/config/mysql-connector-java-5.1.47.jar&quot;
+    jdbc_driver_class =&gt; &quot;com.mysql.jdbc.Driver&quot;
+    # mysql数据库链接，数据库名
+    jdbc_connection_string =&gt; &quot;jdbc:mysql://localhost:3306/test&quot;
+    # mysql数据库用户名，密码
+    jdbc_user =&gt; &quot;root&quot;
+    jdbc_password =&gt; &quot;12345678&quot;
+    # 设置监听间隔  各字段含义（分、时、天、月、年），全部为*默认含义为每分钟更新一次
+    schedule =&gt; &quot;* * * * *&quot;
+    # 分页
+    jdbc_paging_enabled =&gt; &quot;true&quot;
+    # 分页大小
+    jdbc_page_size =&gt; &quot;50000&quot;
+    # sql语句执行文件，也可直接使用 statement =&gt; 'select * from t_employee'
+    statement_filepath =&gt; &quot;jdbc_driver_library =&gt; &quot;/home/ccnn/logstash-7.3.0/config/t_depart.sql&quot;
+    # elasticsearch索引类型名
+    type =&gt; &quot;t_employee&quot;
+  }
+}
+
+# 过滤部分(不是必须项）
+filter {
+    json {
+        source =&gt; &quot;message&quot;
+        remove_field =&gt; [&quot;message&quot;]
+    }
+}
+
+# 输出部分
+output {
+    elasticsearch {
+        # elasticsearch索引名
+        index =&gt; &quot;octopus&quot;
+        # 使用input中的type作为elasticsearch索引下的类型名
+        document_type =&gt; &quot;%{type}&quot;   # &lt;- use the type from each input
+        # elasticsearch的ip和端口号
+        hosts =&gt; &quot;localhost:9200&quot;
+        # 同步mysql中数据id作为elasticsearch中文档id
+        document_id =&gt; &quot;%{id}&quot;
+    }
+    stdout {
+        codec =&gt; json_lines
+    }
+}
+
+# 注: 使用时请去掉此文件中的注释，不然会报错
+
+</code></pre><pre><code># jdbc.sql
+
+select * from t_employee
+
+</code></pre><h2 id="43-启动服务-指定配置文件">4.3 启动服务， 指定配置文件</h2>
+<pre><code>cd logstash-7.3.0
+# 检查配置文件语法是否正确
+bin/logstash -f config/jdbc.conf --config.test_and_exit
+# 启动
+bin/logstash -f config/jdbc.conf --config.reload.automatic
+
+
+</code></pre><h2 id="注册为linux服务">注册为linux服务</h2>
+<blockquote>
+<ol>
+<li>略</li>
+</ol>
+</blockquote>
+<h2 id="44-配置多个同步表怎么办">4.4 配置多个同步表怎么办？</h2>
+<blockquote>
+<p><a href="https://www.cnblogs.com/xuwenjin/p/8989043.html">https://www.cnblogs.com/xuwenjin/p/8989043.html</a></p>
+</blockquote>
+<pre><code># 查看index 是否添加进去
+curl localhost:9200/_cat/indices
+
+# 查看 index_employee里面有没有数据？
+curl localhost:9200/index_employee/_search
+
+</code></pre><h2 id="45-多表增量更新">4.5 多表增量更新</h2>
+<pre><code># sql 中增加 :sql_last_value 过滤， 要求表中存在更新日期字段
+# t_depart.sql
+SELECT * FROM T_depart where updated_at &gt; :sql_last_value
+
+# t_employee.sql
+select * from t_employee where updated_at &gt; :sql_last_value
+
+</code></pre><pre><code># jdbc.conf
+
+input {
+    jdbc {
+      jdbc_connection_string =&gt; &quot;jdbc:mysql://192.168.1.150:3306/test&quot;
+      jdbc_user =&gt; &quot;root&quot;
+      jdbc_password =&gt; &quot;root&quot;
+      jdbc_driver_library =&gt; &quot;/home/ccnn/logstash-7.3.0/config/mysql-connector-java-5.1.47.jar&quot;
+      jdbc_driver_class =&gt; &quot;com.mysql.jdbc.Driver&quot;
+      jdbc_paging_enabled =&gt; &quot;true&quot;
+      jdbc_page_size =&gt; &quot;50000&quot;
+      statement_filepath =&gt; &quot;/home/ccnn/logstash-7.3.0/config/t_depart.sql&quot;
+      schedule =&gt; &quot;* * * * *&quot;
+      type =&gt; &quot;depart&quot;
+    }
+    jdbc {
+      jdbc_connection_string =&gt; &quot;jdbc:mysql://192.168.1.150:3306/test&quot;
+      jdbc_user =&gt; &quot;root&quot;
+      jdbc_password =&gt; &quot;root&quot;
+      jdbc_driver_library =&gt; &quot;/home/ccnn/logstash-7.3.0/config/mysql-connector-java-5.1.47.jar&quot;
+      jdbc_driver_class =&gt; &quot;com.mysql.jdbc.Driver&quot;
+      jdbc_paging_enabled =&gt; &quot;true&quot;
+      jdbc_page_size =&gt; &quot;50000&quot;
+      parameters =&gt; {&quot;number&quot; =&gt; &quot;200&quot;}
+      statement_filepath =&gt; &quot;/home/ccnn/logstash-7.3.0/config/t_employee.sql&quot;
+      schedule =&gt; &quot;* * * * *&quot;
+      type =&gt; &quot;employee&quot;
+    }
+}
+
+filter {
+    json {
+        source =&gt; &quot;message&quot;
+        remove_field =&gt; [&quot;message&quot;]
+    }
+}
+
+output {
+    if[type] == &quot;depart&quot; {
+        elasticsearch {
+            hosts =&gt; [&quot;localhost:9200&quot;]
+            index =&gt; &quot;index_depart&quot;
+            document_id =&gt; &quot;%{id}&quot;
+        }
+    }
+    if[type] == &quot;employee&quot; {
+        elasticsearch {
+            hosts =&gt; [&quot;localhost:9200&quot;]
+            index =&gt; &quot;index_employee&quot;
+            document_id =&gt; &quot;%{id}&quot;
+        }
+    }
+    stdout {
+        codec =&gt; json_lines
+    }
+}
+
+</code></pre><h2 id="5-go包-olivereelastic-基本操作">5. go包 olivere/elastic 基本操作</h2>
+<blockquote>
+<p>选择了第三方的工具包 <a href="https://gopkg.in/olivere/elastic.v7">https://gopkg.in/olivere/elastic.v7</a></p>
+</blockquote>
+<pre><code> go get gopkg.in/olivere/elastic.v7
+ import &quot;gopkg.in/olivere/elastic.v7&quot;
+</code></pre><pre><code>
+package main
+
+import (
+	&quot;context&quot;
+	&quot;encoding/json&quot;
+	&quot;log&quot;
+
+	&quot;gopkg.in/olivere/elastic.v7&quot;
+)
+
+var client *elastic.Client
+
+var host = &quot;http://localhost:9200&quot;
+
+func main() {
+	Init()
+
+	log.Println(&quot;test go &quot;, client)
+
+	e1 := Employee{1, &quot;周瑞发&quot;, &quot;password&quot;, 30}
+	//创建 其中 index type id 和 ES 中概念相同
+	put1, err1 := client.Index().Index(&quot;go-test&quot;).Type(&quot;emp&quot;).Id(&quot;2&quot;).BodyJson(e1).Do(context.Background())
+
+	if err1 != nil {
+		log.Println(&quot;init fiald&quot;, err1.Error())
+	}
+	log.Println(&quot;添加成功: &quot;, put1.Id, put1.Index, put1.Type)
+
+	//修改
+	res0, err0 := client.Update().Index(&quot;go-test&quot;).Type(&quot;emp&quot;).Id(&quot;2&quot;).Doc(map[string]interface{}{&quot;Name&quot;: &quot;刘德华刘德华&quot;}).Do(context.Background())
+	if err0 != nil {
+		log.Println(&quot;修改失败 &quot;, err0.Error())
+	}
+	log.Println(&quot;更新 &quot;, res0.Result)
+
+	//查询id
+	res2, err2 := client.Get().Index(&quot;go-test&quot;).Type(&quot;emp&quot;).Id(&quot;2&quot;).Do(context.Background())
+	if err2 != nil {
+		log.Println(&quot;查询&quot;, err2.Error())
+	} else {
+		log.Println(&quot;查询结果： &quot;, res2.Id, res2.Index, res2.Type, res2.Fields)
+		if res2.Found {
+			source, _ := res2.Source.MarshalJSON()
+			log.Println(source)
+			log.Println(string(source[:]))
+		}
+	}
+
+	//根据文档名字查询
+	//搜索
+	res5, err5 := client.Search(&quot;go-test&quot;).Type(&quot;emp&quot;).Do(context.Background())
+	if err5 != nil {
+		log.Println(err5)
+	}
+	log.Println(&quot;TotalHits &quot;, res5.TotalHits())
+
+	// match query
+	matchQuery := elastic.NewMatchQuery(&quot;Password&quot;, &quot;password&quot;)
+	rsp, err := client.Search(&quot;go-test&quot;).Type(&quot;emp&quot;).Query(matchQuery).Do(context.Background())
+	if err == nil {
+		log.Println(&quot;match query : &quot;, rsp.Hits.Hits)
+
+		if err == nil {
+			for _, hit := range rsp.Hits.Hits {
+				var cmp Employee
+				err := json.Unmarshal(hit.Source, &amp;cmp)
+				if err != nil {
+					log.Panicln(err)
+				}
+				log.Println(cmp)
+
+			}
+
+		}
+	}
+
+	//删除
+	res1, err1 := client.Delete().Index(&quot;go-test&quot;).Type(&quot;emp&quot;).Id(&quot;1&quot;).Do(context.Background())
+	if err1 != nil {
+		log.Println(&quot;删除失败 &quot;, err1.Error())
+	}
+	log.Println(&quot;删除： &quot;, res1.Result)
+
+}
+
+func Init() {
+
+	log.Println(&quot;init start &quot;)
+
+	var err0 error
+
+	// 初始化一个操作对象
+	client, err0 = elastic.NewClient(elastic.SetURL(host))
+	if err0 != nil {
+		log.Println(err0)
+	}
+
+	//是否连接成功
+	info, code, err1 := client.Ping(host).Do(context.Background())
+
+	if err1 != nil {
+		log.Println(err1.Error())
+		return
+	}
+
+	log.Println(info, code)
+
+	//获取ES的信息
+	esversion, err2 := client.ElasticsearchVersion(host)
+	if err2 != nil {
+		log.Println(err2.Error())
+		return
+	}
+	log.Println(&quot;ES VERSION : &quot;, esversion)
+
+}
+
+type Employee struct {
+	Id       int
+	Name     string
+	Password string
+	Age      int
+}
+
+
+
+</code></pre>
+    </div>
+
+    
+    
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://SmileFisher.github.io/tags/elasticsearch/">Elasticsearch</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/docker%E7%A6%BB%E7%BA%BF%E9%83%A8%E7%BD%B2%E5%8F%8A%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">docker离线部署</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/golang%E5%90%AF%E5%8A%A8%E5%A4%9A%E4%B8%AA%E7%AB%AF%E5%8F%A3/">
+            <span class="next-text nav-default">golang启动多个端口</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    <div id="lv-container" class="disqus-comment" data-id="city" data-uid="MTAyMC80NzM3NS8yMzg3NQ==">
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href="https://www.livere.com">comments powered by LiveRe.</a>
+    </noscript>
+   </div>
+
+  
+
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+
+
+<a href="https://SmileFisher.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+       -
+    2020
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        MIZHI
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

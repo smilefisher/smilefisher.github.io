@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>设计模式 on JOY</title>
+    <link>https://SmileFisher.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+    <description>Recent content in 设计模式 on JOY</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 03 Sep 2019 16:01:23 +0800</lastBuildDate>
+    
+	<atom:link href="https://SmileFisher.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>工厂模式[SimpleFactory Pattern]</title>
+      <link>https://SmileFisher.github.io/post/simple-factory/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/simple-factory/</guid>
+      <description>什么是工厂模式？ 本章内容 1. 简单工厂模式（也叫静态工厂模式），2.工厂方法模式，3.抽象工厂模式 特别建议大家可以敲下设计模式的代码，看上去简单</description>
+    </item>
+    
+    <item>
+      <title>建造者模式[Builder Pattern]</title>
+      <link>https://SmileFisher.github.io/post/builder-pattern/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/builder-pattern/</guid>
+      <description>1. 为什么要有建造者模式? 靠靠靠，觉得真无聊？请直接往下翻到代码和代码中的注释，看完后在来看学术性的东西吧&amp;hellip;. 现实中，大兄弟去买</description>
+    </item>
+    
+  </channel>
+</rss>

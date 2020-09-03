@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>策略模式 on JOY</title>
+    <link>https://SmileFisher.github.io/tags/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/</link>
+    <description>Recent content in 策略模式 on JOY</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 03 Sep 2019 16:01:23 +0800</lastBuildDate>
+    
+	<atom:link href="https://SmileFisher.github.io/tags/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>策略模式[Strategy Pattern]</title>
+      <link>https://SmileFisher.github.io/post/strategy-pattern/</link>
+      <pubDate>Tue, 03 Sep 2019 16:01:23 +0800</pubDate>
+      
+      <guid>https://SmileFisher.github.io/post/strategy-pattern/</guid>
+      <description>1. 故事背景 假如你们公司要开发一个5v5对战游戏,像LOL， 要你设计开发那么多英雄，你会怎那么设计呢？ 两个类都继承了抽象类Element， 复用</description>
+    </item>
+    
+  </channel>
+</rss>

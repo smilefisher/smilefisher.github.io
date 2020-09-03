@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>单例模式[Singleton Pattern] - JOY</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="CN1949" />
+  <meta name="description" content="1.什么是单例？为什么需要单例? 许多时候整个系统只需要拥有一个的全局对象这样有利于我们协调系统整体的行为。 比如在某个服务器&amp;rdquo;)程" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3" />
+
+
+<link rel="canonical" href="https://SmileFisher.github.io/post/singleton-pattern/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="单例模式[Singleton Pattern]" />
+<meta property="og:description" content="1.什么是单例？为什么需要单例? 许多时候整个系统只需要拥有一个的全局对象这样有利于我们协调系统整体的行为。 比如在某个服务器&rdquo;)程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://SmileFisher.github.io/post/singleton-pattern/" />
+<meta property="article:published_time" content="2019-09-03T16:01:23+08:00" />
+<meta property="article:modified_time" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="name" content="单例模式[Singleton Pattern]">
+<meta itemprop="description" content="1.什么是单例？为什么需要单例? 许多时候整个系统只需要拥有一个的全局对象这样有利于我们协调系统整体的行为。 比如在某个服务器&rdquo;)程">
+<meta itemprop="datePublished" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="dateModified" content="2019-09-03T16:01:23+08:00" />
+<meta itemprop="wordCount" content="1036">
+
+
+
+<meta itemprop="keywords" content="单例模式,Java," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="单例模式[Singleton Pattern]"/>
+<meta name="twitter:description" content="1.什么是单例？为什么需要单例? 许多时候整个系统只需要拥有一个的全局对象这样有利于我们协调系统整体的行为。 比如在某个服务器&rdquo;)程"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">JOY</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/">首页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/tags/">书签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/about/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      JOY
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/">首页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/tags/">书签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://SmileFisher.github.io/about/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">单例模式[Singleton Pattern]</h1>
+      
+      <div class="post-meta">
+        <time datetime="2019-09-03" class="post-time">
+          2019-09-03
+        </time>
+        <div class="post-category">
+            <a href="https://SmileFisher.github.io/categories/java/"> Java </a>
+            <a href="https://SmileFisher.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"> 设计模式 </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+    
+    <div class="post-content">
+      <h2 id="1什么是单例为什么需要单例">1.什么是单例？为什么需要单例?</h2>
+<p>许多时候整个系统只需要拥有一个的全局对象这样有利于我们协调系统整体的行为。
+比如在某个服务器&rdquo;)程序中，该服务器的配置信息存放在一个[文件]中，这些配置数据由一个单例对象统一读取，然后服务[进程]中的其他对象再通过这个单例对象获取这些配置信息，常见的Windows系统的任务管理器也是到哪里模式；</p>
+<p>实现单例模式的思路是：一个类能返回对象一个引用(永远是同一个)和一个获得该实例的方法（必须是静态方法，通常使用getInstance这个名称）；当我们调用这个方法时，如果类持有的引用不为空就返回这个引用，如果类保持的引用为空就创建该类的实例并将实例的引用赋予该类保持的引用；</p>
+<h2 id="2单例的五种实现">2.单例的五种实现</h2>
+<ol>
+<li><strong>静态内部类实现</strong>，推荐用法：支持懒加载，高效的线程安全；常用于大型框架中；</li>
+</ol>
+<pre><code>class Singleton{
+    //静态内部类
+    private Singleton(){}
+    /**
+     *  静态内部类在Singleton.class加载的时候是不会加载的，所以是懒加载；另外当调用getInstance()方法 
+     *  的时候，JVM会加载内部类；而 jvm加载类的时候本身就是线程安全的，不加同步锁，所以相对高效
+     */ 
+    private static class SingleInnerCls{
+        private static Singleton instance = new Singleton();
+    }
+    public static Singleton getInstance(){
+          return SingleInnerCls.instance ;
+    }
+}
+</code></pre><p>哎吆，我赶脚分不清<strong>懒汉方式, 饿汉方式</strong>?</p>
+<blockquote>
+<p>根据单例对象的生成时间，逼脸，哦不！比懒？
+显然，<strong>懒汉模式</strong>是在<strong>初次调用</strong>对象的时候new的对象，而<strong>饿汉模式</strong>类加载的时候就new了对象；</p>
+</blockquote>
+<ol start="2">
+<li><strong>懒汉方式</strong>，特点：支持懒加载，多线程获取单例对象效率相对低；</li>
+</ol>
+<pre><code>class Singleton{
+    //静态内部类
+    private Singleton(){}
+    //静态对象
+    private static Singleton instance;
+    //加上同步锁,导致多线程调用时效率降低
+    public static synchronized Singleton getInstance(){
+    if(instance == null){
+        instance = new Singleton();
+    }
+    return instance;
+  }
+}
+</code></pre><ol start="3">
+<li><strong>饿汉方式</strong>，特点：不支持懒加载，但是没有同步锁，多线程获取单例对象效率相对高；</li>
+</ol>
+<pre><code>class Singleton{
+    //静态内部类
+    private Singleton(){}
+    //饿汉一生下来就有了对象，真他娘的幸福！ 
+    //即便是没有用到这个对象，jvm也会提供
+    private static Singleton instance = new Singleton();
+    //不用同步锁
+    public static Singleton getInstance(){
+       return instance;
+  }
+}
+</code></pre><p>剩下两个不怎么入流，但是你我绝不是浅尝辄止的人！[装逼击掌]
+4. <strong>通过枚举实现单例</strong>，特点：先天的线程单例，线程安全， 但无延时加载</p>
+<pre><code>enum SinglettonEnum{
+    Instance;
+    //枚举元素的操作方法
+    public void otherOpera() {
+        System.out.println(&quot;其他操作...&quot;);
+    }
+
+}
+</code></pre><ol start="5">
+<li><strong>双重检测锁实现单例</strong>，特点：<strong>听这名字感觉是个王者，实则是个不推荐使用的黑铁！！！</strong> 因为jvm底层的原因，会偶尔出现问题。跟懒汉模式相比，他把锁放在了方法里面，多线程调用方法无需等待，只是初始化对象的时候要等待一次。</li>
+</ol>
+<pre><code>class SinglettonDoubleCheck{
+
+    private SinglettonDoubleCheck(){}
+
+    private static SinglettonDoubleCheck instance;
+
+    public static SinglettonDoubleCheck GetInstance() {
+
+        if(instance == null){
+            synchronized(SinglettonDoubleCheck.instance){
+                if(instance == null) {
+                    instance = new SinglettonDoubleCheck();
+                }
+            }
+        }
+        return instance;
+    }
+
+}
+</code></pre>
+    </div>
+
+    
+    
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://SmileFisher.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
+          <a href="https://SmileFisher.github.io/tags/java/">Java</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/binary-search/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">二分查找</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/simple-factory/">
+            <span class="next-text nav-default">工厂模式[SimpleFactory Pattern]</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    <div id="lv-container" class="disqus-comment" data-id="city" data-uid="MTAyMC80NzM3NS8yMzg3NQ==">
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href="https://www.livere.com">comments powered by LiveRe.</a>
+    </noscript>
+   </div>
+
+  
+
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+
+
+<a href="https://SmileFisher.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+       -
+    2020
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        MIZHI
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
