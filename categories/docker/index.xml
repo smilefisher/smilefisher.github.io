@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>docker on JOY</title>
+    <title>docker on smilefisher</title>
     <link>https://SmileFisher.github.io/categories/docker/</link>
-    <description>Recent content in docker on JOY</description>
+    <description>Recent content in docker on smilefisher</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Tue, 03 Sep 2019 16:01:23 +0800</lastBuildDate>
